@@ -22,7 +22,7 @@
 ;
 ;**** **** **** **** ****
 ;
-; Gaui GE-183 18A hardware definition file
+; Favourite Sky 3 Quattro hardware definition file
 ;
 ;**** **** **** **** ****
 
@@ -41,7 +41,7 @@ $include (c8051f330.inc)
 ; Constant definitions
 ;**** **** **** **** ****
 CSEG AT 1A40h
-Eep_ESC_Layout:		DB	"#GauiGE18318A#  "	; ESC layout tag
+Eep_ESC_Layout:		DB	"#Sky3Quattro#  "	; ESC layout tag
 CSEG AT 1A50h
 Eep_ESC_MCU:			DB	"#BLHELI#F330#   "	; Project and MCU tag (16 Bytes)
 
@@ -73,13 +73,13 @@ DEFAULT_PGM_MULTI_STARTUP_PWR 	EQU 10 	; 1=0.031 2=0.047 3=0.063 4=0.094 5=0.125
 ; PORT 0 definitions *
 ;*********************  
 ;			EQU	7	;i
-Mux_A		EQU	6	;i
+Mux_C		EQU	6	;i
 Rcp_In		EQU	5	;i
 ;			EQU	4	;i
-Comp_Com		EQU	3	;i
-Mux_C		EQU	2	;i
+Comp_Com	EQU	3	;i
+Mux_B		EQU	2	;i
 ;			EQU	1	;i
-Mux_B		EQU	0	;i
+Mux_A		EQU	0	;i
 
 P0_DIGITAL	EQU	NOT((1 SHL Mux_A)+(1 SHL Mux_B)+(1 SHL Mux_C)+(1 SHL Comp_Com))
 P0_INIT		EQU	0FFh
@@ -123,12 +123,12 @@ ENDM
 ;*********************
 ; PORT 1 definitions *
 ;*********************
-CnFET		EQU	7	;o
-CpFET		EQU	6	;o
+AnFET		EQU	7	;o
+ApFET		EQU	6	;o
 BnFET		EQU	5	;o
 BpFET		EQU	4	;o
-AnFET		EQU	3	;o
-ApFET		EQU	2	;o
+CnFET		EQU	3	;o
+CpFET		EQU	2	;o
 ;			EQU	1	;i
 Adc_Ip		EQU	0	;i
 
@@ -220,18 +220,18 @@ MACRO All_pFETs_On
 	setb	P1.CpFET
 ENDM
 
-MACRO Set_Comp_Phase_A
+MACRO Set_Comp_Phase_C
 	jb	Flags3.PGM_DIR_REV, ($+6)
-	mov	CPT0MX, #13h	; Set comparator multiplexer to phase A
+	mov	CPT0MX, #13h	; Set comparator multiplexer to phase C
 	jnb	Flags3.PGM_DIR_REV, ($+6)
 	mov	CPT0MX, #11h
 ENDM
-MACRO Set_Comp_Phase_B
-	mov	CPT0MX, #10h	; Set comparator multiplexer to phase B
+MACRO Set_Comp_Phase_A
+	mov	CPT0MX, #10h	; Set comparator multiplexer to phase A
 ENDM
-MACRO Set_Comp_Phase_C
+MACRO Set_Comp_Phase_B
 	jb	Flags3.PGM_DIR_REV, ($+6)
-	mov	CPT0MX, #11h	; Set comparator multiplexer to phase C
+	mov	CPT0MX, #11h	; Set comparator multiplexer to phase B
 	jnb	Flags3.PGM_DIR_REV, ($+6)
 	mov	CPT0MX, #13h
 ENDM
